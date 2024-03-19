@@ -1,7 +1,8 @@
 #ifndef EXACT_HH
 #define EXACT_HH
 
-#include "bctype.hh"
+#include <dune/common/fvector.hh>
+
 /** Metoda artificijelnog rješenja:  Koeficijenti za zadaću :
  *
  *   - div( grad u) + a(x) u = f(x)   u \Omega

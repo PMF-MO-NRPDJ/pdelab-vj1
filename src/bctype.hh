@@ -50,7 +50,7 @@ class BCExtension
  // Klasa čuva referencu na GridView objekt.
   const GV& gv;
 public:
-  typedef Dune::PDELab::GridFunctionTraits<GV,double,1,Dune::FieldVector<double,1> > Traits;
+  using Traits = Dune::PDELab::GridFunctionTraits<GV,double,1,Dune::FieldVector<double,1> >;
 
   // Konstruktor samo uzima referencu na  GridView objekt.
   BCExtension (const GV& gv_) : gv(gv_) {}
@@ -65,10 +65,10 @@ public:
                         const typename Traits::DomainType& xlocal,
                         typename Traits::RangeType& y) const
   {
-    const int dim = GFTraits<GV>::GridViewType::Grid::dimension;
-
+    //const int dim = GFTraits<GV>::GridViewType::Grid::dimension;
     // Pretvori lokalne koordinate u globalne
-    Dune::FieldVector<double,dim> x = e.geometry().global(xlocal);
+    // x je tipa Dune::FieldVector<double,dim>
+    auto x = e.geometry().global(xlocal);
     y = exact(x);
 
     return;
@@ -81,14 +81,14 @@ public:
 
 // Pomoćna kratica.
 template <typename GV>
-using ATraits = Dune::PDELab::AnalyticGridFunctionTraits<GV,double,0>;// 1 = skalarna funkcija
+using ATraits = Dune::PDELab::AnalyticGridFunctionTraits<GV,double,1>;// 1 = skalarna funkcija
 
 // Klasa koja daje diskretnu mrežnu funkciju egzaktnog rješenja. 
 template <typename GV>
 class ExactGF : public Dune::PDELab::AnalyticGridFunctionBase<ATraits<GV>, ExactGF<GV>>
 {
 public:
-   typedef Dune::PDELab::AnalyticGridFunctionBase<ATraits<GV>, ExactGF<GV> > BaseT;
+   using BaseT = Dune::PDELab::AnalyticGridFunctionBase<ATraits<GV>, ExactGF<GV> >;
 
    ExactGF(GV const & gv) : BaseT(gv) {}
 
